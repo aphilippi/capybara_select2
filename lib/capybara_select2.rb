@@ -10,6 +10,21 @@ module CapybaraSelect2
 
     Utils.validate_options!(options)
 
+    page =
+      if !defined?(page) || page == nil  
+        if self.is_a?(Page) 
+          self
+        elsif self.respond_to?(:parent)
+          x = self
+          while x.respond_to?(:parent) && !(x.is_a?(Page))
+            x = x.parent
+          end
+          x
+        end
+      else
+        page  
+      end
+
     container = Utils.find_select2_container(options, page)
     version = Utils.detect_select2_version(container)
     options_with_select2_details =
