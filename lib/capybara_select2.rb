@@ -10,25 +10,25 @@ module CapybaraSelect2
 
     Utils.validate_options!(options)
 
-    page =
-      if !defined?(page) || page == nil  
-        if self.is_a?(Page) 
-          self
-        elsif self.respond_to?(:parent)
-          x = self
-          while x.respond_to?(:parent) && !(x.is_a?(Page))
-            x = x.parent
-          end
-          x
-        end
-      else
-        page  
-      end
+    # page =
+    #   if !defined?(page) || page == nil  
+    #     if self.is_a?(Page) 
+    #       self
+    #     elsif self.respond_to?(:parent)
+    #       x = self
+    #       while x.respond_to?(:parent) && !(x.is_a?(Page))
+    #         x = x.parent
+    #       end
+    #       x
+    #     end
+    #   else
+    #     page  
+    #   end
 
-    container = Utils.find_select2_container(options, page)
+    container = Utils.find_select2_container(options, Capybara.page)
     version = Utils.detect_select2_version(container)
     options_with_select2_details =
-      options.merge({ container: container, version: version, page: page })
+      options.merge({ container: container, version: version, page: Capybara.page })
 
     values.each do |value|
       Helpers.select2_open(options_with_select2_details)
