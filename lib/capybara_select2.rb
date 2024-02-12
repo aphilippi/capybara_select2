@@ -21,6 +21,7 @@ module CapybaraSelect2
       if options[:search] || options[:tag]
         term = options[:search].is_a?(String) ? options[:search] : value
         Helpers.select2_search(term, options_with_select2_details)
+        sleep 0.5
       end
 
       Helpers.select2_select(value, options_with_select2_details)
